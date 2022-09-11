@@ -1,14 +1,20 @@
-import React from 'react';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "antd/dist/antd.css";
-import {Button} from 'antd';
+import { Button } from "antd";
+import { Login } from "./pages/login";
+import { Register } from "./pages/register";
 
 export function App() {
   return (
-    <div className="App p-5">
-      <h1> Dawini </h1>
-      <Button type="primary">Primary Button</Button>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
-
