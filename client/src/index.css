@@ -1,10 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@700&family=Bebas+Neue&family=Catamaran:wght@700&family=Clicker+Script&family=Fascinate+Inline&display=swap');
 /* antd override */
 
+*{
+  font-family: 'Anek Malayalam', sans-serif;
+
+}
 input{
   border-radius:0px !important;
   border: 1px solid rgba(128, 128, 128, 0.521) !important;
   height: 40px !important;
 }
+
+
+
 input:focus {
   outline: none !important;
   box-shadow: none !important;
@@ -23,6 +31,7 @@ label {
 .card-title {
   font-size: 1.5rem;
   font-weight: bold;
+  margin-left: 9px;
 }
 .normal-text {
   font-size: 1rem;
@@ -32,6 +41,7 @@ label {
   border-radius:0px  !important ;
   
 }
+
 .primary-button {
   background-color: #005555 !important;
   border-color:#005555 !important;
@@ -43,6 +53,19 @@ label {
   margin-right: 10px !important;
 
 }
+.primary-button:hover {
+  height:55px !important;
+  border-radius: 50px;
+}
+.anchor {
+  color: black !important;
+  text-decoration: underline;
+  font-size: 16px !important;
+  margin-left: 9px;
+}
+.anchor:hover{
+  text-decoration: underline !important;
+}
 
 
 /* auth pages */
@@ -52,7 +75,21 @@ label {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #005555;
 }
+
+
 .authentication-form {
   width:400px
+}
+.authentication .card-title{
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: orangered;
+  color: white !important;
+  max-width: max-content !important;
+   font-family: 'Anek Malayalam', sans-serif;
+  padding: 7px 15px;
+  margin-left: -40px;
+  border-bottom-left-radius:10px ;
 }
