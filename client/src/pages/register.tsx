@@ -16,7 +16,7 @@ export function Register() {
           </Form.Item>
 
           <Form.Item label="Email:" name="email">
-            <Input placeholder="Email" />
+            <Input placeholder="Email"  type="email"/>
           </Form.Item>
 
           <Form.Item label="Password:" name="password">
