@@ -1,10 +1,21 @@
-import { Button, Form, Input } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import toast, { Toast } from "react-hot-toast";
+import { Button, Form, Input } from "antd";
 
 export function Register() {
-  const onFinish = (values: any) => {
-    console.log("Received values of form ", values);
+  const onFinish = async (values: any) => {
+    try {
+      const response = await axios.post("/api/users/register", values);
+      if (response.data.success) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error("Something went wrong,try again");
+    }
   };
   return (
     <div className="authentication">
@@ -16,7 +27,7 @@ export function Register() {
           </Form.Item>
 
           <Form.Item label="Email:" name="email">
-            <Input placeholder="Email"  type="email"/>
+            <Input placeholder="Email" type="email" />
           </Form.Item>
 
           <Form.Item label="Password:" name="password">
