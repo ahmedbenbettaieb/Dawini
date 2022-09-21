@@ -1,16 +1,17 @@
 const express = require("express");
-require("dotenv").config();
-
+const connectDb = require("./config/dbConfig");
 const app = express();
-
-
-const userRoute = require("./routes/userRoute");
-app.use(express.json());
-
+require("dotenv").config();
 const dbConfig = require("./config/dbConfig");
+const morgan = require("morgan");
 
-app.use('/api/users', userRoute);
+connectDb();
+
+app.use(express.json());
+app.use(morgan("dev"));
+const userRoute = require("./routes/userRoute");
+
+app.use("/api/users", userRoute);
 
 const port = process.env.PORT || 5000;
-
 app.listen(port, () => console.log(`node server started at ${port}`));

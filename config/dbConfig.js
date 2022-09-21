@@ -1,18 +1,16 @@
-const mongoose=require('mongoose');
-
-
+const mongoose = require("mongoose");
 //connect to the mongo db
-const connect =mongoose.connect(process.env.MONGO_URL);
 
-//create object to this connection
-const connection=mongoose.connection;
-//testing connection 
-//if succeeded
-connection.on('connected',()=>{
-    console.log('MongoDb is connected');
-})
-//if failed
-connection.on('error',(err)=>{
-    console.log('connection error',err);
-})
-module.exports=mongoose;
+const connectDb = async () => {
+  try {
+    await mongoose.connect(
+      "mongodb+srv://ahmed:ccF08sj35DfaLkPC@cluster0.kggmz.mongodb.net/my-project?retryWrites=true&w=majority"
+    );
+    console.log("MongoDb is connected");
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
+
+module.exports = connectDb;

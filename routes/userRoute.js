@@ -8,7 +8,7 @@ router.post("/register", async (req, res) => {
     const userExsist = await User.findOne({ email: req.body.email });
     if (userExsist) {
       return res
-        .status(404)
+        .status(200)
         .send({ message: "User already exists", success: false });
     }
     //crypter le mot de passe
@@ -17,7 +17,6 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
     req.body.password = hashedPassword;
     const newUser = new User(req.body);
-
     await newUser.save();
     res.status(200).send({ message: "user created succefully", success: true });
   } catch (error) {
