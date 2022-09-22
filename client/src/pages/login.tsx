@@ -1,11 +1,30 @@
 import { Form, Input, Button } from 'antd';
+import axios from 'axios';
 import React from 'react'
-import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Login() {
-  const onFinish = (values: any) => {
-    console.log("Received values of form ", values);
+    const navigate = useNavigate();
+
+  const onFinish =async (values: any) => {
+      try {
+      const response = await axios.post("/api/users/login", values);
+      if (response.data.success) {
+        toast.success(response.data.message);
+        toast("Redirecting to home page");
+        localStorage.setItem("token",response.data.data);
+        navigate("/");
+
+
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error("Something went wrong,try again");
+    }
   };
+  
   return (
     <div className="authentication">
       <div className="authentication-form card p-3">
@@ -31,5 +50,6 @@ export function Login() {
       </div>
     </div>
   );
-}
+  
+  }
 

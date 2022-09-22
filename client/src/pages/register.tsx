@@ -1,7 +1,7 @@
 import React from "react";
-import { Link, Navigate, Route, Router, useNavigate} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import axios from "axios";
-import toast, { Toast } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { Button, Form, Input } from "antd";
 
 

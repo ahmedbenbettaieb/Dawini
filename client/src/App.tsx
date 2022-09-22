@@ -6,6 +6,7 @@ import { Button } from "antd";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { Toaster } from "react-hot-toast";
+import { Home } from "./pages/Home";
 
 export function App() {
   return (
@@ -15,6 +16,7 @@ export function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </div>
