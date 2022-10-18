@@ -24,7 +24,7 @@ export function Login() {
       toast.error("Something went wrong,try again");
     }
   };
-  
+   
   return (
     <div className="authentication">
       <div className="authentication-form card p-3">
