@@ -2,10 +2,15 @@ import { Form, Input, Button } from 'antd';
 import axios from 'axios';
 import React from 'react'
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
+
 export function Login() {
+  
+  const {loading}=useSelector((state:any)=> state.alerts)
     const navigate = useNavigate();
+    
 
   const onFinish =async (values: any) => {
       try {

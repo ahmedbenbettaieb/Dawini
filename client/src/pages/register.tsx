@@ -1,12 +1,10 @@
 import React from "react";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Button, Form, Input } from "antd";
 
-
 export function Register() {
-
   const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
@@ -16,8 +14,6 @@ export function Register() {
         toast.success(response.data.message);
         toast("Redirecting to login page");
         navigate("/login");
-
-
       } else {
         toast.error(response.data.message);
       }
@@ -28,10 +24,10 @@ export function Register() {
   return (
     <div className="authentication">
       <div className="authentication-form card p-3">
-        <h1 className="card-title">Welcome to MyDoctor !  </h1>
+        <h1 className="card-title">Welcome to MyDoctor ! </h1>
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item label="Name:" name="name">
-            <Input placeholder="Name" />
+            <Input placeholder="Name"  minLength={3} />
           </Form.Item>
 
           <Form.Item label="Email:" name="email">
@@ -53,9 +49,3 @@ export function Register() {
     </div>
   );
 }
-
-
-  
-
-
-
