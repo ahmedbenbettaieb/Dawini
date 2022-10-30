@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
+import { Layout } from "../components/layout";
 
 export function Home() {
   const getData = async () => {
@@ -9,7 +10,7 @@ export function Home() {
         {},
         {
           headers: {
-            Authorization: "Bearer " + localStorage.getItem('token'),
+            Authorization: "Bearer " + localStorage.getItem("token"),
           },
         }
       );
@@ -23,5 +24,9 @@ export function Home() {
     getData();
   }, []);
 
-  return <div>Home</div>;
+  return (
+    <Layout>
+      <h1> Homepage </h1>
+    </Layout>
+  );
 }
