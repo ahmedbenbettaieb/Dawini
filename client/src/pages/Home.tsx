@@ -26,7 +26,7 @@ export function Home() {
 
   return (
     <Layout>
-      <h1> Homepage </h1>
+      <h2> Homepage </h2>
     </Layout>
   );
 }

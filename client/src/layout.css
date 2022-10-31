@@ -2,6 +2,9 @@
   padding: 20px;
   height: 100vh;
 }
+h1{
+  font-size: 70px;
+}
 .sidebar {
   background-color: #005555;
   border-radius: 5px;
@@ -11,13 +14,26 @@
   padding: 10px;
   width: 250px;
 }
+.collapsed-sidebar{
+  background-color: #005555;
+  border-radius: 5px;
+  box-shadow: 0 0 2 px gray;
+  margin-right: 20px;
+  min-height: 100%;
+  padding: 10px;
+  width: 58px;
+
+}
 .header {
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 0 2px gray;
   margin-bottom: 20px;
   height: 15vh;
-  width: 100%;
+  display: flex;
+  align-items:center ;
+  justify-content: space-between;
+
 }
 .body {
   background-color: white;
@@ -51,9 +67,20 @@ color: rgba(255, 255, 255, 0.700);
   margin: 0 15px;
 
 }
+
 .active-menu-item {
   color:white;
   background-color: #013737;
   padding: 5px;
   border-radius:5px ;
+}
+.close-icons {
+  font-size: 30px;
+  color: black;
+  cursor: pointer;
+  padding-left: 10px;
+}
+.close-icons:hover {
+  font-size: 50px;
+
 }
