@@ -12,7 +12,7 @@ export function Register() {
 
   const onFinish = async (values: any) => {
     try {
-      dispatch(showLoading())
+      dispatch(showLoading());
       const response = await axios.post("/api/users/register", values);
       dispatch(hideLoading());
       if (response.data.success) {
@@ -23,7 +23,7 @@ export function Register() {
         toast.error(response.data.message);
       }
     } catch (error) {
-            dispatch(hideLoading());
+      dispatch(hideLoading());
 
       toast.error("Something went wrong,try again");
     }
@@ -33,11 +33,43 @@ export function Register() {
       <div className="authentication-form card p-3">
         <h1 className="card-title">Welcome to MyDoctor ! </h1>
         <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item label="Name:" name="name">
-            <Input placeholder="Name" minLength={3} />
+          <Form.Item
+            label="Name:"
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: "Please  enter your name",
+              },
+              {
+                whitespace: true,
+                message: "the name can not be empty",
+              },
+              {
+                min: 3,
+                message: "the name can not be under 3 characters",
+              },
+            ]}
+            hasFeedback
+          >
+            <Input placeholder="Name" />
           </Form.Item>
 
-          <Form.Item label="Email:" name="email">
+          <Form.Item
+            label="Email:"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please  enter your email",
+              },
+              {
+                type: "email",
+                message:'Please enter a valid email'
+              },
+            ]}
+            hasFeedback
+          >
             <Input placeholder="Email" type="email" />
           </Form.Item>
 
