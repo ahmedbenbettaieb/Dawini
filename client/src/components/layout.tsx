@@ -50,7 +50,7 @@ export function Layout(props:LayoutProps) {
   return (
     <div className="main">
       <div className="d-flex layout">
-        <div className={`${collapsed ? 'collapsed-sidebar':'sidebar'}`}>
+        <div className="sidebar" >
           <div className="sidebar-header">
             <h1>MD</h1>
           </div>
@@ -65,7 +65,7 @@ export function Layout(props:LayoutProps) {
                   }`}
                 >
                   <i className={menu.icon}></i>
-                  { !collapsed && <Link to={menu.path}>{menu.name}</Link>}
+                  {!collapsed && <Link to={menu.path}>{menu.name}</Link>}
                 </div>
               );
             })}
@@ -74,7 +74,17 @@ export function Layout(props:LayoutProps) {
 
         <div className="content">
           <div className="header">
-            <i className="ri-close-circle-line close-icons" onClick={()=>setCollapsed(true)}></i>
+            {collapsed ? (
+              <i
+                className="ri-menu-line header-action-icons "
+                onClick={() => setCollapsed(false)}
+              ></i>
+            ) : (
+              <i
+                className="ri-close-circle-line   header-action-icons"
+                onClick={() => setCollapsed(true)}
+              ></i>
+            )}
           </div>
           <div className="body">{props.children}</div>
         </div>
