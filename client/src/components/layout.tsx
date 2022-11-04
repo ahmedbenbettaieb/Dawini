@@ -1,15 +1,20 @@
+import { getValue } from "@testing-library/user-event/dist/utils";
 import React, { ReactNode, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
-import '../layout.css';
+import "../layout.css";
 
 
 export interface LayoutProps {
   children: React.ReactNode;
 }
-export function Layout(props:LayoutProps) {
-  const location=useLocation();
-  const[collapsed,setCollapsed]=useState(false)
+export function Layout(props: LayoutProps) {
+ 
+  const location = useLocation();
+  const {user} = useSelector((state:any) => state.user);
+
+  const [collapsed, setCollapsed] = useState(false);
 
   const userMenu = [
     {
@@ -44,13 +49,11 @@ export function Layout(props:LayoutProps) {
     },
   ];
 
-
-  const menuToBeRendered=userMenu;
-
+  const menuToBeRendered = userMenu;
   return (
     <div className="main">
       <div className="d-flex layout">
-        <div className="sidebar" >
+        <div className="sidebar">
           <div className="sidebar-header">
             <h1>MD</h1>
           </div>
@@ -85,6 +88,12 @@ export function Layout(props:LayoutProps) {
                 onClick={() => setCollapsed(true)}
               ></i>
             )}
+            <div className="d-flex align-items-center px-4">
+              <i className="ri-notification-3-fill header-action-icons px-2"></i>
+              <Link className="anchor" to="/profile">
+                {user}
+              </Link>
+            </div>
           </div>
           <div className="body">{props.children}</div>
         </div>
