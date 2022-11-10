@@ -32,8 +32,8 @@ export const getUserData = createAsyncThunk("get-userData", async () => {
       }
     );
     if (res.data) {
-      console.log(res.data)
-      return res.data;
+      console.log(res.data.data)
+      return res.data.data;
     }
   } catch (error) {
     console.log(error);

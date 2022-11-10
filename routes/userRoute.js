@@ -74,9 +74,14 @@ router.post("/user", authMiddleware, async (req, res) => {
         .send({ message: "User does not exist", success: false });
     } else {
       return res.status(200).json({
-        name: user.name,
-        email: user.email,
-        isAdmin: user.isAdmin,
+        data: {
+          name: user.name,
+          email: user.email,
+          isAdmin: user.isAdmin,
+          isDoctir:user.isDoctor,
+          seenNotifications: user.seenNotifications,
+          unseenNotifications: user.unseenNotifications,
+        },
       });
     }
   } catch (error) {

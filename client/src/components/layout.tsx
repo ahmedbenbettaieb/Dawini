@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 import "../layout.css";
 import { useAppSelector } from "../redux/store";
@@ -10,6 +10,7 @@ export interface LayoutProps {
 }
 export function Layout(props: LayoutProps) {
   const location = useLocation();
+  const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.user);
 
   const [collapsed, setCollapsed] = useState(false);
@@ -39,12 +40,6 @@ export function Layout(props: LayoutProps) {
       path: "/profile",
       icon: "ri-user-heart-line",
     },
-    {
-      id: "5",
-      name: "Logout",
-      path: "/logout",
-      icon: "ri-logout-circle-r-line",
-    },
   ];
   const adminMenu = [
     {
@@ -59,27 +54,20 @@ export function Layout(props: LayoutProps) {
       path: "/users",
       icon: "ri-user-line",
     },
+
     {
-      id: "2",
+      id: "3",
       name: "Doctors",
       path: "/doctors",
-      icon: "ri-doctor-line",
+      icon: "ri-user-star-line",
     },
-
     {
       id: "4",
       name: "Profile",
       path: "/profile",
       icon: "ri-user-heart-line",
     },
-    {
-      id: "5",
-      name: "Logout",
-      path: "/logout",
-      icon: "ri-logout-circle-r-line",
-    },
   ];
-  user ? console.log(user.isAdmin):console.log("not found");
   const menuToBeRendered = user && user.isAdmin ? adminMenu : userMenu;
 
   if (user === null) return <p>loading...</p>;
@@ -103,8 +91,20 @@ export function Layout(props: LayoutProps) {
                   <i className={menu.icon}></i>
                   {!collapsed && <Link to={menu.path}>{menu.name}</Link>}
                 </div>
+
               );
             })}
+            <div
+              className="d-flex menu-item"
+              onClick={() => {
+                localStorage.clear();
+                navigate("/login");
+              }}
+            >
+              <i className="ri-logout-circle-line"></i>
+              {!collapsed && <Link to="/login">Logout</Link>}
+            </div>
+            ;
           </div>
         </div>
 
