@@ -43,7 +43,7 @@ router.post("/login", async (req, res) => {
         .status(400)
         .send({ message: "Password is incorrect ", success: false });
     } else {
-       token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "1d",
       });
     }
@@ -64,7 +64,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/user", authMiddleware, async (req,res) => {
+router.post("/user", authMiddleware, async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.body.userId });
 
@@ -73,16 +73,16 @@ router.post("/user", authMiddleware, async (req,res) => {
         .status(200)
         .send({ message: "User does not exist", success: false });
     } else {
-      return res.status(200).send({
-        success: true,
-        data: {
-          name: user.name,
-          email: user.email,
-        },
+      return res.status(200).json({
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
       });
     }
   } catch (error) {
- return res .status(200).send({ message: "Error getting user info", success: false, error });
+    return res
+      .status(200)
+      .send({ message: "Error getting user info", success: false, error });
   }
 });
 

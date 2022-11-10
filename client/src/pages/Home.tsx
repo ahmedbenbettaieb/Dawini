@@ -1,29 +1,15 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { Layout } from "../components/layout";
+import { useAppDispatch } from "../redux/store";
+import { getUserData } from "../redux/userSlice";
 
 export function Home() {
-  const getData = async () => {
-    try {
-      const response = await axios.post(
-        "/api/users/user",
-        {},
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        }
-      );
-
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const dispatch = useAppDispatch();
+  
   React.useEffect(() => {
-    getData();
-  }, []);
-
+    dispatch(getUserData());
+  }, [dispatch]);
   return (
     <Layout>
       <h2> Homepage </h2>

@@ -2,8 +2,10 @@
   padding: 20px;
   height: 100vh;
 }
-h1{
-  font-size: 60px;
+.logo{
+  color: white;
+  font-weight: bold;
+
 }
 .sidebar {
   background-color: #005555;
@@ -12,6 +14,7 @@ h1{
   margin-right: 20px;
   min-height: 100%;
   padding: 10px;
+  
 }
 /* .collapsed-sidebar{
   background-color: #005555;

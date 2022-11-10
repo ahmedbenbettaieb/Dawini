@@ -7,12 +7,13 @@ import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { Toaster } from "react-hot-toast";
 import { Home } from "./pages/Home";
-import { useSelector } from "react-redux";
+
 import { ProtectedRoute } from "./components/protectedRoute";
-import {PublicRoute} from "./components/publicRoute";
+import { PublicRoute } from "./components/publicRoute";
+import { useAppSelector } from "./redux/store";
 
 export function App() {
-  const { loading } = useSelector((state: any) => state.alerts);
+  const { loading } = useAppSelector((state) => state.alerts);
   return (
     <div>
       <BrowserRouter>
