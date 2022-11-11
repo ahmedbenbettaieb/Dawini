@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@700&family=Bebas+Neue&family=Catamaran:wght@700&family=Clicker+Script&family=Fascinate+Inline&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Xanh+Mono&display=swap');
 /* antd override */
 
 *{
-  font-family: 'Anek Malayalam', sans-serif;
+  font-family: 'Fragment Mono', monospace;
 
 }
 input{
@@ -13,7 +14,7 @@ input{
 
 
 
-input:focus {
+input:focus ,.ant-picker{
   outline: none !important;
   box-shadow: none !important;
   border: 1px solid gray !important;
@@ -25,7 +26,14 @@ label {
 .ant-form-item {
   margin :10px !important ;
 }
-
+.ant-picker {
+   border-radius:0px !important;
+  border: 1px solid rgba(128, 128, 128, 0.521) !important;
+  height: 40px !important;
+}
+.ant-picker-input input {
+  border:none !important;
+}
 
 /* common styling */
 
@@ -47,7 +55,16 @@ label {
   height: 5rem;
   color: white !important;
 }
-
+.page-title {
+  font-size: 25px;
+  color:rgba(0, 0, 0, 0.833);
+  font-weight: bold;
+}
+.card-title{
+  font-size: 22px;
+  font-weight: bold;
+  color:rgba(0, 0, 0, 0.625);
+}
 
 .card-title {
   font-size: 1.5rem;
@@ -72,6 +89,18 @@ label {
   font-size: 16px !important;
   margin-left: 10px !important;
   margin-right: 10px !important;
+
+}
+.btn btn-secondary btn-lg {
+  background-color: #005555 !important;
+  border-color:#005555 !important;
+  height: 40px !important;
+  width: 95% !important;
+  color: white !important;
+  font-size: 16px !important;
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+  width: max-content !important;
 
 }
 .primary-button:hover {

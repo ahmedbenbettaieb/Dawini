@@ -14,10 +14,7 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    email: {
-      type: String,
-      required: true,
-    },
+    
     phoneNumber: {
       type: String,
       required: true,
@@ -26,7 +23,7 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    adresse: {
+    address: {
       type: String,
       required: true,
     },
@@ -42,12 +39,9 @@ const doctorSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    fromTime: {
-      type: String,
-      required: true,
-    },
-    toTime: {
-      type: String,
+    
+    timings: {
+      type: Array,
       required: true,
     },
   },
