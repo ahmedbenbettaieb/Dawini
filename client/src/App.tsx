@@ -11,6 +11,7 @@ import { Home } from "./pages/Home";
 import { ProtectedRoute } from "./components/protectedRoute";
 import { PublicRoute } from "./components/publicRoute";
 import { useAppSelector } from "./redux/store";
+import { ApplyDoctor } from "./pages/ApplyDoctor";
 
 export function App() {
   const { loading } = useAppSelector((state) => state.alerts);
@@ -46,6 +47,14 @@ export function App() {
             element={
               <ProtectedRoute>
                 <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/apply-doctor"
+            element={
+              <ProtectedRoute>
+                <ApplyDoctor children={undefined} />
               </ProtectedRoute>
             }
           />
