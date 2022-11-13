@@ -1,3 +1,4 @@
+import { Badge, Avatar } from "antd";
 import React, { ReactNode, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -12,6 +13,11 @@ export function Layout(props: LayoutProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.user);
+  var unseenNotificationslength=0;
+  if(user){
+    unseenNotificationslength=user.unseenNotifications.length
+
+  }
 
   const [collapsed, setCollapsed] = useState(false);
 
@@ -91,7 +97,6 @@ export function Layout(props: LayoutProps) {
                   <i className={menu.icon}></i>
                   {!collapsed && <Link to={menu.path}>{menu.name}</Link>}
                 </div>
-
               );
             })}
             <div
@@ -122,7 +127,9 @@ export function Layout(props: LayoutProps) {
               ></i>
             )}
             <div className="d-flex align-items-center px-4">
-              <i className="ri-notification-3-fill header-action-icons px-2"></i>
+              <Badge count={unseenNotificationslength}>
+                <i className="ri-notification-3-fill header-action-icons px-2"></i>
+              </Badge>
               <Link className="anchor" to="/profile">
                 {user ? user.name : null}
               </Link>

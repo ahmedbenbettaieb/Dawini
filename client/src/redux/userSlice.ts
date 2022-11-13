@@ -2,10 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 type UserInfoTypes = {
-  id:string,
+  id: string;
   name: string;
   email: string;
   isAdmin: boolean;
+  seenNotifications: Array<any>;
+  unseenNotifications: Array<any>;
 };
 
 type InitialStateTypes = {
@@ -33,7 +35,7 @@ export const getUserData = createAsyncThunk("get-userData", async () => {
       }
     );
     if (res.data) {
-      console.log(res.data.data.id)
+      console.log(res.data.data.unseenNotifications);
       return res.data.data;
     }
   } catch (error) {
