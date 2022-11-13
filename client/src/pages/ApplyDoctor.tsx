@@ -1,7 +1,13 @@
 import { Button, Col, Form, Input, InputNumber, Row, TimePicker } from 'antd'
 import FormItem from 'antd/es/form/FormItem'
+import axios from 'axios'
 import React from 'react'
+import toast from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { Layout } from '../components/layout'
+import { showLoading, hideLoading } from '../redux/alertSlice'
+import { useAppSelector } from '../redux/store'
 
 const onFinish=(values: any)=>{
   console.log('success',values)
@@ -12,6 +18,41 @@ type DoctorProps={
     children:React.ReactNode
 }
 export function ApplyDoctor(props:DoctorProps) {
+  const dispatch=useDispatch();
+  const {user}=useAppSelector(state =>state.user);
+  var id="";
+  if(user){
+     id=user.id
+
+  }
+
+  const navigate=useNavigate()
+  const onFinish=async(values:any)=>{
+    try {
+      dispatch(showLoading());
+      const response = await axios.post("/api/users/apply-doctor-account", {
+        ...values,
+        userID:id
+      },{
+        headers:{
+            Authorization:`Bearer ${localStorage.getItem('token')}`
+        },
+      });
+      dispatch(hideLoading());
+      if (response.data.success) {
+        toast.success(response.data.message);
+        toast("Redirecting to login page");
+        navigate("/");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+
+      toast.error("Something went wrong,try again");
+    }
+  };
+  
   return (
     <Layout>
       <h1 className="page-title">Apply Doctor</h1>

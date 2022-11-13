@@ -44,9 +44,14 @@ const doctorSchema = new mongoose.Schema(
       type: Array,
       required: true,
     },
+    status:{
+      type:String,
+      default:"pending",
+    }
   },
   {
     timestamp: true,
   }
 );
-export const doctorModel=mongoose.model("doctors",doctorSchema);
+ const doctorModel=mongoose.model("doctors",doctorSchema);
+module.exports = doctorModel;

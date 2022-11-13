@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 type UserInfoTypes = {
+  id:string,
   name: string;
   email: string;
   isAdmin: boolean;
@@ -32,7 +33,7 @@ export const getUserData = createAsyncThunk("get-userData", async () => {
       }
     );
     if (res.data) {
-      console.log(res.data.data)
+      console.log(res.data.data.id)
       return res.data.data;
     }
   } catch (error) {

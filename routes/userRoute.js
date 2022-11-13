@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
+
 const User = require("../models/userModel");
+const Doctor = require("../models/doctorModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authMiddleware = require("../middlewares/authMiddleware");
@@ -73,21 +75,56 @@ router.post("/user", authMiddleware, async (req, res) => {
         .status(200)
         .send({ message: "User does not exist", success: false });
     } else {
+
       return res.status(200).json({
         data: {
+          id:user._id,
           name: user.name,
           email: user.email,
           isAdmin: user.isAdmin,
-          isDoctir:user.isDoctor,
+          isDoctor: user.isDoctor,
           seenNotifications: user.seenNotifications,
           unseenNotifications: user.unseenNotifications,
         },
       });
     }
+    console.log(id);
   } catch (error) {
     return res
       .status(200)
       .send({ message: "Error getting user info", success: false, error });
+  }
+});
+
+router.post("/apply-doctor-account",authMiddleware, async (req, res) => {
+  try {
+    const newDoctor = new Doctor({ ...req.body, status: "pending" });
+    await newDoctor.save();
+    const adminUser = await User.findOne({ isAdmin: true });
+    const unseenNotifications = adminUser.unseenNotifications;
+    unseenNotifications.push({
+      type: "new-doctor-request",
+      message: `  ${newDoctor.lastName} has applied for a  doctor account  `,
+      data: {
+        doctorId: newDoctor._id,
+        name: newDoctor.firstName + " " + newDoctor.lastName,
+      },
+      onClickPath: "/admin/doctors",
+    });
+    await User.findByIdAndUpdate(adminUser._id,{unseenNotifications});
+    res.status(200).send({
+      success:true,
+      message:"doctor account applied successfully"
+    })
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .send({
+        message: "Error Applying doctor account",
+        success: false,
+        error,
+      });
   }
 });
 
