@@ -75,10 +75,9 @@ router.post("/user", authMiddleware, async (req, res) => {
         .status(200)
         .send({ message: "User does not exist", success: false });
     } else {
-
       return res.status(200).json({
         data: {
-          id:user._id,
+          id: user._id,
           name: user.name,
           email: user.email,
           isAdmin: user.isAdmin,
@@ -96,35 +95,57 @@ router.post("/user", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/apply-doctor-account",authMiddleware, async (req, res) => {
+router.post("/apply-doctor-account", authMiddleware, async (req, res) => {
   try {
     const newDoctor = new Doctor({ ...req.body, status: "pending" });
     await newDoctor.save();
     const adminUser = await User.findOne({ isAdmin: true });
+    firstName = newDoctor.firstName;
     const unseenNotifications = adminUser.unseenNotifications;
     unseenNotifications.push({
       type: "new-doctor-request",
-      message: `  ${newDoctor.lastName} has applied for a  doctor account  `,
+      message: `  ${firstName}  ${newDoctor.lastName} has applied for a  doctor account  `,
       data: {
         doctorId: newDoctor._id,
         name: newDoctor.firstName + " " + newDoctor.lastName,
       },
       onClickPath: "/admin/doctors",
     });
-    await User.findByIdAndUpdate(adminUser._id,{unseenNotifications});
+    await User.findByIdAndUpdate(adminUser._id, { unseenNotifications });
     res.status(200).send({
-      success:true,
-      message:"doctor account applied successfully"
-    })
+      success: true,
+      message: "doctor account applied successfully",
+    });
   } catch (error) {
     console.log(error);
-    return res
-      .status(500)
-      .send({
-        message: "Error Applying doctor account",
-        success: false,
-        error,
-      });
+    return res.status(500).send({
+      message: "Error Applying doctor account",
+      success: false,
+      error,
+    });
+  }
+});
+router.post("/mark-all-notifications-as-seen", authMiddleware, async (req, res) => {
+  try {
+    const user=await User.findOne({_id:req.body.userId});
+    const unseenNotifications=user.unseenNotifications;
+    user.seenNotifications=unseenNotifications;
+    user.unseenNotifications=[];
+    const updatedUser=await User.findByIdAndUpdate(user._id,user);
+    updatedUser.password=undefined;
+    res.status.send({
+      success:true,
+      message:"All notifications are marked as seen",
+      data:updatedUser,
+    })
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      message: "Error Applying doctor account",
+      success: false,
+      error,
+    });
   }
 });
 

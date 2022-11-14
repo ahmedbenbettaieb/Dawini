@@ -13,10 +13,9 @@ export function Layout(props: LayoutProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.user);
-  var unseenNotificationslength=0;
-  if(user){
-    unseenNotificationslength=user.unseenNotifications.length
-
+  var unseenNotificationslength = 0;
+  if (user) {
+    unseenNotificationslength = user.unseenNotifications.length;
   }
 
   const [collapsed, setCollapsed] = useState(false);
@@ -126,9 +125,15 @@ export function Layout(props: LayoutProps) {
                 onClick={() => setCollapsed(true)}
               ></i>
             )}
-            <div className="d-flex align-items-center px-4">
+            <div
+              className="d-flex align-items-center px-4"
+              //onClick={() => navigate("notifications")}
+            >
               <Badge count={unseenNotificationslength}>
-                <i className="ri-notification-3-fill header-action-icons px-2"></i>
+                <i
+                  className="ri-notification-3-fill header-action-icons px-2"
+                  onClick={() => navigate("notifications")}
+                ></i>
               </Badge>
               <Link className="anchor" to="/profile">
                 {user ? user.name : null}

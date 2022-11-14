@@ -146,3 +146,9 @@ label {
   margin-left: -40px;
   border-bottom-left-radius:10px ;
 }
+
+/* notif */
+.list-group-item {
+  content: " ,";
+}
+
