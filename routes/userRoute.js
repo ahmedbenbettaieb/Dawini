@@ -175,4 +175,5 @@ router.post("/delete-all-notifications", authMiddleware, async (req, res) => {
   }
 });
 
+
 module.exports = router;

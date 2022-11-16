@@ -56,14 +56,14 @@ export function Layout(props: LayoutProps) {
     {
       id: "2",
       name: "Users",
-      path: "/users",
+      path: "/admin/users",
       icon: "ri-user-line",
     },
 
     {
       id: "3",
       name: "Doctors",
-      path: "/doctors",
+      path: "/admin/doctors",
       icon: "ri-user-star-line",
     },
     {
