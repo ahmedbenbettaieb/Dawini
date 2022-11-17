@@ -150,7 +150,7 @@ export function ApplyDoctor(props:DoctorProps) {
             <FormItem
               required
               label="Timings"
-              name="timing"
+              name="timings"
               rules={[{ required: true }]}
             >
               <TimePicker.RangePicker />
