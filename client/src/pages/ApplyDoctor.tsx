@@ -25,6 +25,7 @@ export function ApplyDoctor(props:DoctorProps) {
      id=user.id
 
   }
+  var applied=false;
 
   const navigate=useNavigate()
   const onFinish=async(values:any)=>{

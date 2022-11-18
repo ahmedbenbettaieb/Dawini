@@ -1,6 +1,7 @@
 import Table, { ColumnsType } from "antd/lib/table";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { Layout } from "../../components/layout";
 import { hideLoading, showLoading } from "../../redux/alertSlice";
@@ -10,7 +11,7 @@ export function DoctorsList(props: { Children: any }) {
 
   const dispatch = useDispatch();
 
-  const getUserData = async () => {
+  const getDoctorsData = async () => {
     try {
       dispatch(showLoading());
 
@@ -29,9 +30,37 @@ export function DoctorsList(props: { Children: any }) {
       console.log(error);
     }
   };
+  const changeDoctorStatus = async (record: any, status: any) => {
+    try {
+      dispatch(showLoading());
+
+      const response = await axios.post(
+        "/api/admin/change-doctor-status",
+        {
+          doctorId: record._id,
+          status: status,
+          userID: record._id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch(hideLoading());
+
+      if (response.data.success) {
+        toast.success(response.data.message);
+        getDoctorsData();
+      }
+    } catch (error) {
+      toast.error("error");
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    getUserData();
+    getDoctorsData();
   }, []);
 
   interface DataType {
@@ -50,7 +79,7 @@ export function DoctorsList(props: { Children: any }) {
       key: "name",
       render: (text: any, record: any) => {
         return (
-          <span >
+          <span>
             {record.firstName} {record.lastName}
           </span>
         );
@@ -74,8 +103,22 @@ export function DoctorsList(props: { Children: any }) {
       render: (text: any, record: any) => {
         return (
           <div className="d-flex">
-            {record.status === "pending" && <h1 className="anchor">Approve</h1>}
-            {record.status === "approved" && <h1 className="anchor">Block</h1>}
+            {record.status === "pending" && (
+              <h1
+                className="anchor"
+                onClick={() => changeDoctorStatus(record, "approved")}
+              >
+                Approve
+              </h1>
+            )}
+            {record.status === "approved" && (
+              <h1
+                className="anchor"
+                onClick={() => changeDoctorStatus(record, "Blocked")}
+              >
+                Block
+              </h1>
+            )}
           </div>
         );
       },

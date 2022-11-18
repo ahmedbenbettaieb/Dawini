@@ -13,7 +13,7 @@ import { PublicRoute } from "./components/publicRoute";
 import { useAppSelector } from "./redux/store";
 import { ApplyDoctor } from "./pages/ApplyDoctor";
 import Notifications from "./pages/Notifications";
-import {UsersList} from "./pages/Admin/UsersList";
+import { UsersList } from "./pages/Admin/UsersList";
 import { DoctorsList } from "./pages/Admin/DoctorsList";
 
 export function App() {
@@ -81,7 +81,7 @@ export function App() {
             path="/admin/doctors"
             element={
               <ProtectedRoute>
-                <DoctorsList Children={undefined}  />
+                <DoctorsList Children={undefined} />
               </ProtectedRoute>
             }
           />

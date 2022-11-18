@@ -1,11 +1,9 @@
-const express=require('express');
-const router=express.Router();
+const express = require("express");
+const router = express.Router();
 
-const User=require('../models/userModel');
-const Doctor=require('../models/doctorModel');
+const User = require("../models/userModel");
+const Doctor = require("../models/doctorModel");
 const authMiddleware = require("../middlewares/authMiddleware");
-
-
 
 router.get("/get-all-doctors", authMiddleware, async (req, res) => {
   try {
@@ -41,4 +39,33 @@ router.get("/get-all-users", authMiddleware, async (req, res) => {
     });
   }
 });
-module.exports=router;
+router.post("/change-doctor-status", authMiddleware, async (req, res) => {
+  try {
+    const { doctorId, status} = req.body;
+    const doctor = await Doctor.findByIdAndUpdate(doctorId, {
+      status,
+    });
+    const user = await User.findOne({ _id: doctor.userId});
+    const unseenNotifications = user.unseenNotifications;
+   
+    unseenNotifications.push({
+      type: "new-doctor-account-request-changed",
+      message: `  your doctor account  has been  ${status} `,
+      onClickPath: "/notifications",
+    });
+    await user.save();
+    res.status(200).send({
+      message: "Doctor status updated",
+      success: "true",
+      data: doctor,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      message: "Error ",
+      success: false,
+      error,
+    });
+  }
+});
+module.exports = router;
