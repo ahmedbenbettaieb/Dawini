@@ -1,43 +1,43 @@
-import { Button, Col, Form, Input, InputNumber, Row, TimePicker } from 'antd'
-import FormItem from 'antd/es/form/FormItem'
-import axios from 'axios'
-import React from 'react'
-import toast from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { DoctorForm } from '../components/DoctorForm'
-import { Layout } from '../components/layout'
-import { showLoading, hideLoading } from '../redux/alertSlice'
-import { useAppSelector } from '../redux/store'
+import { Form, Row, Col, Input, TimePicker, Button } from "antd";
+import FormItem from "antd/es/form/FormItem";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { Layout } from "../../components/layout";
+import { showLoading, hideLoading } from "../../redux/alertSlice";
+import { useAppSelector } from "../../redux/store";
 
+export function Profile(props: { Children: any }) {
+  const dispatch = useDispatch();
+  const { user } = useAppSelector((state) => state.user);
+  const [doctor, setDoctor] = useState({});
+  const params=useParams();
 
+  const navigate = useNavigate();
 
-
-type DoctorProps={
-    children:React.ReactNode
-}
-export function ApplyDoctor(props:DoctorProps) {
-  const dispatch=useDispatch();
-  const {user}=useAppSelector(state =>state.user);
-  var id="";
-  if(user){
-     id=user.id
-
+  var userId = "";
+  if (user) {
+    userId = user.id;
   }
-  var applied=false;
+  console.log(userId);
 
-  const navigate=useNavigate()
-  const onFinish=async(values:any)=>{
+  const onFinish = async (values: any) => {
     try {
       dispatch(showLoading());
-      const response = await axios.post("/api/users/apply-doctor-account", {
-        ...values,
-        userID:id
-      },{
-        headers:{
-            Authorization:`Bearer ${localStorage.getItem('token')}`
+      const response = await axios.post(
+        "/api/users/apply-doctor-account",
+        {
+          ...values,
+          userID: userId,
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       dispatch(hideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
@@ -52,12 +52,41 @@ export function ApplyDoctor(props:DoctorProps) {
       toast.error("Something went wrong,try again");
     }
   };
-  
+  const getDoctorData = async () => {
+    try {
+      dispatch(showLoading());
+      const response = await axios.post(
+        "/api/doctor/get-doctor-info-by-user-id",
+        {
+          userId: params.userId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch(hideLoading());
+      if (response.data.success) {
+        setDoctor(response.data.data);
+      } else {
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch(hideLoading());
+    }
+  };
+
+  useEffect(() => {
+    getDoctorData();
+  }, []);
   return (
     <Layout>
-      <h1 className="page-title">Apply Doctor</h1>
+      <div className="h1 page-title" >
+        Doctor Profile
+      </div>
       <hr />
-       <Form layout="vertical" onFinish={onFinish}>
+      <Form layout="vertical" onFinish={onFinish}>
         <h1 className="card-title mt-3">Personal Information</h1>
         <Row gutter={20}>
           <Col span={8} xs={24} sm={24} lg={8}>
@@ -162,9 +191,7 @@ export function ApplyDoctor(props:DoctorProps) {
             Submit
           </Button>
         </div>
-      </Form> 
-      
+      </Form>
     </Layout>
   );
 }
-

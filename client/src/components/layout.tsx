@@ -17,7 +17,12 @@ export function Layout(props: LayoutProps) {
   if (user) {
     unseenNotificationslength = user.unseenNotifications.length;
   }
-
+  var id="";
+  var isDoctor=false;
+  if(user){
+    id=user.id;
+    isDoctor=user.isDoctor;
+  }
   const [collapsed, setCollapsed] = useState(false);
 
   const userMenu = [
@@ -73,7 +78,33 @@ export function Layout(props: LayoutProps) {
       icon: "ri-user-heart-line",
     },
   ];
-  const menuToBeRendered = user && user.isAdmin ? adminMenu : userMenu;
+    const DoctorMenu = [
+      {
+        id: "1",
+        name: "Home",
+        path: "/",
+        icon: "ri-home-smile-fill",
+      },
+      {
+        id: "2",
+        name: "Appointments",
+        path: "/appointments",
+        icon: "ri-task-line",
+      },
+      
+      {
+        id: "3",
+        name: "Profile",
+        path: `/doctor/profile/${id}`,
+        icon: "ri-user-heart-line",
+      },
+    ];
+
+
+
+
+  
+  const menuToBeRendered = user && user.isAdmin ? adminMenu :isDoctor?DoctorMenu : userMenu;
 
   if (user === null) return <p>loading...</p>;
   return (

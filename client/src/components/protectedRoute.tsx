@@ -8,6 +8,8 @@ import { getUserData, setUser } from "../redux/userSlice";
 
 export function ProtectedRoute(props: { children: any }) {
   const { user } = useAppSelector((state) => state.user);
+    console.log(user);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

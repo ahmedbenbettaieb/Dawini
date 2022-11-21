@@ -6,6 +6,7 @@ type UserInfoTypes = {
   name: string;
   email: string;
   isAdmin: boolean;
+   isDoctor:boolean;
   seenNotifications: Array<any>;
   unseenNotifications: Array<any>;
 };
@@ -35,7 +36,7 @@ export const getUserData = createAsyncThunk("get-userData", async () => {
       }
     );
     if (res.data) {
-      console.log(res.data.data.unseenNotifications);
+      // console.log(res.data.data.unseenNotifications);
       return res.data.data;
     }
   } catch (error) {

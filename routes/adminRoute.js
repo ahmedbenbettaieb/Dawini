@@ -41,18 +41,23 @@ router.get("/get-all-users", authMiddleware, async (req, res) => {
 });
 router.post("/change-doctor-status", authMiddleware, async (req, res) => {
   try {
-    const { doctorId, status} = req.body;
+    const { doctorId, status } = req.body;
     const doctor = await Doctor.findByIdAndUpdate(doctorId, {
       status,
     });
-    const user = await User.findOne({ _id: doctor.userId});
+    const user = await User.findOne({ _id: doctor.userId });
     const unseenNotifications = user.unseenNotifications;
-   
+
     unseenNotifications.push({
       type: "new-doctor-account-request-changed",
       message: `  your doctor account  has been  ${status} `,
       onClickPath: "/notifications",
     });
+    if (status === "approved") {
+      user.isDoctor = true;
+    } else {
+      user.isDoctor = false;
+    }
     await user.save();
     res.status(200).send({
       message: "Doctor status updated",
