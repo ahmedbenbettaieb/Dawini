@@ -1,6 +1,7 @@
 import { Button, Col, Form, Input, InputNumber, Row, TimePicker } from 'antd'
 import FormItem from 'antd/es/form/FormItem'
 import axios from 'axios'
+import moment from 'moment'
 import React from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
@@ -30,14 +31,22 @@ export function ApplyDoctor(props:DoctorProps) {
   const onFinish=async(values:any)=>{
     try {
       dispatch(showLoading());
-      const response = await axios.post("/api/users/apply-doctor-account", {
-        ...values,
-        userID:id
-      },{
-        headers:{
-            Authorization:`Bearer ${localStorage.getItem('token')}`
+      const response = await axios.post(
+        "/api/users/apply-doctor-account",
+        {
+          ...values,
+          userID: id,
+          timings: [
+            moment(values.timings[0]).format("HH:mm"),
+            moment(values.timings[1]).format("HH:mm"),
+          ],
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       dispatch(hideLoading());
       if (response.data.success) {
         toast.success(response.data.message);

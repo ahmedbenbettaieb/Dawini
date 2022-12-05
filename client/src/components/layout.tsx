@@ -105,6 +105,8 @@ export function Layout(props: LayoutProps) {
 
   
   const menuToBeRendered = user && user.isAdmin ? adminMenu :isDoctor?DoctorMenu : userMenu;
+  const role=
+    user && user.isAdmin ? "Admin" : isDoctor ? "Doctor" : "Patient";
 
   if (user === null) return <p>loading...</p>;
   return (
@@ -113,6 +115,7 @@ export function Layout(props: LayoutProps) {
         <div className="sidebar">
           <div className="sidebar-header">
             <h1 className="logo">MD</h1>
+            <h1 className="role">{role}</h1>
           </div>
           <div className="menu">
             {menuToBeRendered.map((menu) => {
